@@ -371,6 +371,10 @@ console.log( xs.search('red') );
 //     path: 'brush colors background red' } ]
 ```
 ___
+**Xs.prototype.find**
+
+Alias for Xs.prototype.search.
+___
 **Xs.prototype.list**
 > `<this> list( <string>/<number> path )`
 
@@ -393,6 +397,10 @@ console.log( xs.list('brush colors background') );
 //     value: '#008',
 //     path: 'brush colors background blue' } ]
 ```
+___
+**Xs.prototype.ls**
+
+Alias for Xs.prototype.list.
 ___
 **Xs.prototype.get**
 > `<this> get( <string>/<number> path, <boolean> terminator )`
@@ -513,16 +521,22 @@ ___
 change log
 ==========
 
+**0.1.2**
+
+Added two aliases; Xs.prototype.ls for .list and Xs.prototype.find for .search.
+
 **0.1.0**
 
 First commit.
+
+Thoroughly tested already, partly with Jasmine, but objects are time consuming to test, still a lot to do..
 ___
 todo:
 =====
 
 - remove strings.js and words.js dependencies
 - source annotations
-- testing, some more testing
+- some more testing
 - make listeners more specific for any combination of: add, create, read, update, delete
 - readme
 

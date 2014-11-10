@@ -115,7 +115,7 @@ _xsPath= ( object, path, command ) ->
 
 #															Xs
 
-class Xs extends _
+class Xs
 
 	@empty: ( object ) ->
 		return false if _.notObject( object ) or object instanceof Number
@@ -179,7 +179,7 @@ class Xs extends _
 
 	constructor: ( path, value ) ->
 		@object= {}
-		Xs.add(@object, path, value) if path
+		Xs.add( @object, path, value ) if path
 
 	xs: ( callback ) -> Xs.xs @object, callback
 
@@ -317,6 +317,11 @@ class Listeners
 	remove: ( path ) -> @listeners.remove Strings.oneSpaceAndTrim path; @
 
 # end Listeners
+
+
+# some aliases:
+Xs::ls= Xs::list
+Xs::find= Xs::search
 
 # give access to dependencies
 Xs.Types= Words.Types

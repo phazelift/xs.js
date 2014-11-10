@@ -2,8 +2,6 @@
 (function() {
   "use strict";
   var Listeners, Strings, Words, Xs, _, _emptyObject, _extend, _xs, _xsPath,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     __slice = [].slice;
 
   if (typeof window !== "undefined" && window !== null) {
@@ -128,9 +126,7 @@
     return result;
   };
 
-  Xs = (function(_super) {
-    __extends(Xs, _super);
-
+  Xs = (function() {
     Xs.empty = function(object) {
       if (_.notObject(object) || object instanceof Number) {
         return false;
@@ -479,7 +475,7 @@
 
     return Xs;
 
-  })(_);
+  })();
 
   Listeners = (function() {
     Listeners.count = 0;
@@ -559,6 +555,10 @@
     return Listeners;
 
   })();
+
+  Xs.prototype.ls = Xs.prototype.list;
+
+  Xs.prototype.find = Xs.prototype.search;
 
   Xs.Types = Words.Types;
 
