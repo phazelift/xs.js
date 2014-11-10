@@ -1,0 +1,32 @@
+{
+  "name": "xs.js",
+  "version": "0.1.0",
+  "description": "A powerful Object manipulation library/utility.",
+  "main": "xs.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phazelift/xs.js"
+  },
+  "keywords": [
+    "object",
+    "objects",
+    "tool",
+    "tools",
+    "manipulation",
+    "library",
+    "utility"
+  ],
+  "author": "Dennis Raymondo <phazelift@gmail.com> (https://github.com/phazelift/)",
+  "license": "GPL-3",
+  "bugs": {
+    "url": "https://github.com/phazelift/xs.js/issues"
+  },
+  "homepage": "https://github.com/phazelift/xs.js",
+  "dependencies": {
+    "words.js" : "0.3.5"
+  },
+  "devDependencies": {}
+}
