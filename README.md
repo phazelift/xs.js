@@ -23,7 +23,7 @@ console.log( myObject.someNode.someKey );				// crash!
 console.log( myObject[ 'someNode' ][ 'someKey' ] );		// crash!
 // but, you can safely call with xs.js:
 console.log( myObject.get('someNode someKey') );
-// ''
+// undefined
 ```
 
 Ever tried to create an object with path to some property?
