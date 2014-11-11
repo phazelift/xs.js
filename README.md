@@ -327,7 +327,7 @@ non-existing, no changes will be made. setKey is similar to set, it only sets th
 ```javascript
 xs.setKey( 'brush colors red', 'sienna' );
 console.log( xs.get('brush colors') );
-// { red: 'sienna',
+// { sienna: '#f00',
 //   green: '#0f0',
 //   blue: '#00f',
 //   background: { red: '#800', green: '#080', blue: '#008' } }
@@ -378,7 +378,7 @@ ___
 **Xs.prototype.list**
 > `<this> list( <string>/<number> path )`
 
-List returns an info array containing all nodes found (deep) under an absolute path.
+List returns an info array containing all nodes found (deep) under an absolute path, a bit like 'ls -R' in bash.
 Internally list uses Xs.prototype.xs so you can check .xs to find out about the format of the returned objects.
 If path is invalid or not found, an empty array will be returned.
 
