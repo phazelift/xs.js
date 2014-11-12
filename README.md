@@ -521,10 +521,14 @@ ___
 change log
 ==========
 
+**0.1.3**
+
+Updated the words.js dependency to version 0.3.6
+___
 **0.1.2**
 
 Added two aliases; Xs.prototype.ls for .list and Xs.prototype.find for .search.
-
+___
 **0.1.0**
 
 First commit.
