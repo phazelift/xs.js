@@ -40,7 +40,7 @@ _extend= ( target= {}, source, append ) ->
 		if _.isObject value
      		_extend target[ key ], value, append
       else
-			target[ key ]= value if not (append and _.isDefined target[ key ])
+			target[ key ]= value if not ( append and target.hasOwnProperty key )
 	return target
 
 # 3 response options for the callack: key, value, remove
@@ -99,6 +99,7 @@ _xsPath= ( object, path, command ) ->
 	else index= 0
 
 	target= nodes[ index ]
+	# check object with .hasOwnProperty to allow for undefined keys
 	if _.isDefined( command ) and object.hasOwnProperty target
 		if command.remove
 			return delete object[ target ]
@@ -133,7 +134,7 @@ class Xs
 		for node, index in path.words
 			target[ node ]?= {} if ( index < (path.count- 1) or valueIsObject )
 			if index < (path.count- 1)
-				target= target[ node ]
+				target= target[ node ] if target.hasOwnProperty node
 			else if valueIsObject
 				_extend target[ node ], value, true
 			else target[ node ]?= value
@@ -161,7 +162,7 @@ class Xs
 	@getn: ( object, path, replacement ) -> _.forceNumber Xs.get(object, path), replacement
 	@gets: ( object, path ) -> _.forceString Xs.get( object, path )
 	@geta: ( object, path ) -> _.forceArray Xs.get( object, path )
-	@geto: ( object,  path ) -> _.forceObject Xs.get( object, path )
+	@geto: ( object, path ) -> _.forceObject Xs.get( object, path )
 
 	@keys: ( object, path ) ->
 		keys= []
@@ -250,7 +251,6 @@ class Xs
 
 	values: ( path ) ->
 		values= []
-		# not calling Xs.values because it checks for validity of @object, slower..
 		if _.isObject path= _xsPath @object, path
 			values.push value for key, value of path
 		return values
@@ -296,8 +296,8 @@ class Listeners
 			@listeners.add path, obj
 		trigger= @listeners.get path
 		return {
-			trigger: (data= '') => trigger[ name ]?( path, data )
-			remove: =>	delete trigger[ name ]
+			trigger: (data= '') -> trigger[ name ]?( path, data )
+			remove: -> delete trigger[ name ]
 		}
 
 	trigger: ( path, data= '' ) ->
@@ -306,7 +306,7 @@ class Listeners
 		# trigger all subs if we have a wildcard
 		for node in listeners
 			callbacks= node.value
-			nodePath= new Words( node.path ).pop().$
+			nodePath= new Words( node.path ).remove(-1).$
 			if path.startsWith nodePath
 				callback?( path.$, data ) for name, callback of callbacks
 
@@ -317,7 +317,6 @@ class Listeners
 	remove: ( path ) -> @listeners.remove Strings.oneSpaceAndTrim path; @
 
 # end Listeners
-
 
 # some aliases:
 Xs::ls= Xs::list

@@ -3,7 +3,7 @@ xs.js
 
 ***Access your objects!***
 
-xs.js is a powerful tool for save and easy string/word based access to Javascript objects. Key features:
+xs.js is a library/tool for save and easy string/word based access to Javascript objects. Key features:
 
 - use space delimited strings to create and access your objects
 - safely fetching nodes, without risking to crash your app
@@ -59,8 +59,8 @@ Install xs.js, check the API below and wield your new powers for the good!
 ___
 #### Dependencies:
 xs.js extends words.js, which includes strings.js, which includes types.js.
-- types.js is a tiny, but powerful custom type checker/enforcer. It's API can be found at: https://github.com/phazelift/types.js
-- strings.js is a full-fledged string manipulation library. It's API can be found at: https://github.com/phazelift/strings.js
+- types.js is a tiny custom type checker/enforcer. It's API can be found at: https://github.com/phazelift/types.js
+- strings.js is a string manipulation library. It's API can be found at: https://github.com/phazelift/strings.js
 - words.js is a toolbox for manipulating the words in a string. It's API can be found at: https://github.com/phazelift/words.js
 
 When using xs.js in node.js, you can use `npm install xs.js` (requires npm - https://www.npmjs.org).
@@ -520,7 +520,11 @@ ___
 
 change log
 ==========
+**0.1.6**
 
+Updated the words.js dependency to version 0.3.7.
+Fixed a bug in Xs.add that caused an error when adding non existing paths in a very specific way.
+___
 **0.1.3**
 
 Updated the words.js dependency to version 0.3.6
@@ -545,6 +549,6 @@ todo:
 - readme
 
 ___
-**Additional Info**
+**Additional**
 
 I am always open for feature requests or any feedback. You can reach me at Github.

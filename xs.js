@@ -36,7 +36,7 @@
       } else {
 
       }
-      if (!(append && _.isDefined(target[key]))) {
+      if (!(append && target.hasOwnProperty(key))) {
         target[key] = value;
       }
     }
@@ -162,7 +162,9 @@
           }
         }
         if (index < (path.count - 1)) {
-          target = target[node];
+          if (target.hasOwnProperty(node)) {
+            target = target[node];
+          }
         } else if (valueIsObject) {
           _extend(target[node], value, true);
         } else {
@@ -501,19 +503,15 @@
       }
       trigger = this.listeners.get(path);
       return {
-        trigger: (function(_this) {
-          return function(data) {
-            if (data == null) {
-              data = '';
-            }
-            return typeof trigger[name] === "function" ? trigger[name](path, data) : void 0;
-          };
-        })(this),
-        remove: (function(_this) {
-          return function() {
-            return delete trigger[name];
-          };
-        })(this)
+        trigger: function(data) {
+          if (data == null) {
+            data = '';
+          }
+          return typeof trigger[name] === "function" ? trigger[name](path, data) : void 0;
+        },
+        remove: function() {
+          return delete trigger[name];
+        }
       };
     };
 
@@ -527,7 +525,7 @@
       for (_i = 0, _len = listeners.length; _i < _len; _i++) {
         node = listeners[_i];
         callbacks = node.value;
-        nodePath = new Words(node.path).pop().$;
+        nodePath = new Words(node.path).remove(-1).$;
         if (path.startsWith(nodePath)) {
           for (name in callbacks) {
             callback = callbacks[name];
