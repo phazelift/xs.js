@@ -296,17 +296,18 @@
       if ('' === (nodePath = _.forceString(nodePath))) {
         return '';
       }
-      value = _xsPath(this.object, nodePath, {
+      if (value = _xsPath(this.object, nodePath, {
         value: value
-      });
-      if (_.isObject(value)) {
-        keys = new Xs(value).search();
-        for (_i = 0, _len = keys.length; _i < _len; _i++) {
-          key = keys[_i];
-          this.triggerListener(nodePath + ' ' + key.path, value);
+      })) {
+        if (_.isObject(value)) {
+          keys = new Xs(value).search();
+          for (_i = 0, _len = keys.length; _i < _len; _i++) {
+            key = keys[_i];
+            this.triggerListener(nodePath + ' ' + key.path, value);
+          }
+        } else {
+          this.triggerListener(nodePath, value);
         }
-      } else {
-        this.triggerListener(nodePath, value);
       }
       return value;
     };
@@ -516,30 +517,28 @@
     };
 
     Listeners.prototype.trigger = function(path, data) {
-      var callback, callbacks, k, listener, listeners, name, node, nodePath, _i, _len;
+      var callback, callbacks, k, listener, listeners, name, node, _i, _len, _ref;
       if (data == null) {
         data = '';
       }
-      path = new Words(path);
-      listeners = this.listeners.search('*');
-      for (_i = 0, _len = listeners.length; _i < _len; _i++) {
-        node = listeners[_i];
+      _ref = this.listeners.search('*');
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        node = _ref[_i];
         callbacks = node.value;
-        nodePath = new Words(node.path).remove(-1).$;
-        if (path.startsWith(nodePath)) {
+        if (new Words(path).startsWith(new Words(node.path).remove(-1).$)) {
           for (name in callbacks) {
             callback = callbacks[name];
             if (typeof callback === "function") {
-              callback(path.$, data);
+              callback(path, data);
             }
           }
         }
       }
-      listeners = this.listeners.get(Strings.oneSpaceAndTrim(path.$));
+      listeners = this.listeners.get(Strings.oneSpaceAndTrim(path));
       for (k in listeners) {
         listener = listeners[k];
         if (typeof listener === "function") {
-          listener(path.$, data);
+          listener(path, data);
         }
       }
       return this;

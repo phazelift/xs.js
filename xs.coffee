@@ -1,4 +1,4 @@
-# xs.coffee - A Javascript object utility, written in Coffeescript.
+# xs.coffee - A Javascript deep object manipulation tool/library, written in Coffeescript.
 #
 # Copyright (c) 2014 Dennis Raymondo van der Sluis
 #
@@ -199,11 +199,12 @@ class Xs
 
 	set: ( nodePath, value ) ->
 		return '' if '' is nodePath= _.forceString nodePath
-		value= _xsPath @object, nodePath, {value: value}
-		if _.isObject value
-			keys= new Xs( value ).search()
-			@triggerListener( nodePath+ ' '+ key.path, value ) for key in keys
-		else @triggerListener nodePath, value
+		if value= _xsPath @object, nodePath, {value: value}
+			if _.isObject value
+				keys= new Xs( value ).search()
+				@triggerListener( nodePath+ ' '+ key.path, value ) for key in keys
+			else
+				@triggerListener nodePath, value
 		return value
 
 	setAll: ( query, value ) ->
@@ -301,17 +302,14 @@ class Listeners
 		}
 
 	trigger: ( path, data= '' ) ->
-		path= new Words path
-		listeners= @listeners.search '*'
-		# trigger all subs if we have a wildcard
-		for node in listeners
+		for node in @listeners.search '*'
 			callbacks= node.value
-			nodePath= new Words( node.path ).remove(-1).$
-			if path.startsWith nodePath
-				callback?( path.$, data ) for name, callback of callbacks
+			if new Words(path).startsWith new Words( node.path ).remove(-1).$
+				callback?( path, data ) for name, callback of callbacks
 
-		listeners= @listeners.get Strings.oneSpaceAndTrim path.$
-		listener?( path.$, data ) for k, listener of listeners
+		listeners= @listeners.get Strings.oneSpaceAndTrim path
+		for k, listener of listeners
+			listener?( path, data )
 		return @
 
 	remove: ( path ) -> @listeners.remove Strings.oneSpaceAndTrim path; @
