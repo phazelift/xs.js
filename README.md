@@ -3,7 +3,7 @@ xs.js
 
 ***Access your objects!***
 
-xs.js is a library/tool for save and easy string/word based access to Javascript objects. Key features:
+**xs.js** A Javascript deep object manipulation tool/library, with string based access. Key features:
 
 - use space delimited strings to create and access your objects
 - safely fetching nodes, without risking to crash your app
