@@ -86,10 +86,10 @@ When using AMD, you can load xs.js like so:
 ```javascript
 require.config({
 	 paths: {
-		xs, [ '../path/to/xs.min(.js') ]
+		xs, [ 'path/to/xs.min(.js') ]
 	}
 	,shim:
-		xs: [ '../path/to/words.min(.js)' ]
+		xs: [ 'path/to/words.min(.js)' ]
 });
 
 require( ['xs'], function( Xs ){
