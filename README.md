@@ -63,6 +63,10 @@ xs.js extends words.js, which includes strings.js, which includes types.js.
 - strings.js is a string manipulation library. It's API can be found at: https://github.com/phazelift/strings.js
 - words.js is a toolbox for manipulating the words in a string. It's API can be found at: https://github.com/phazelift/words.js
 
+<br/>
+
+**node.js**
+
 When using xs.js in node.js, you can use `npm install xs.js` (requires npm - https://www.npmjs.org).
 ```javascript
 var Xs		= require('xs.js');
@@ -74,13 +78,43 @@ var Types	= Xs.Types;
 var Strings	= Xs.Strings;
 var Words	= Xs.Words;
 ```
-For in the browser you need to load words.min.js first before loading xs.min.js. After that you can access the
-dependencies via the following global variables:
+<br/>
+
+**AMD**
+
+When using AMD, you can load xs.js like so:
+```javascript
+require.config({
+	 paths: {
+		xs, [ '../path/to/xs.min(.js') ]
+	}
+	,shim:
+		xs: [ '../path/to/words.min(.js)' ]
+});
+
+require( ['xs'], function( Xs ){
+	console.log( Xs.empty({}) );
+	// true
+});
+```
+Don't forget to put the dependency words.min.js in the script directory.
+
+<br/>
+
+**Browser**
+
+For in the browser you need to load words.min.js first before loading xs.min.js.
+```html
+<script src="words.min.js"></script>
+<script src="xs.min.js"></script>
+```
+After that you can access the dependencies via the following global variables:
 - Types
 - Strings
 - Words
 
 ___
+
 # API
 ___
 **Xs.prototype.constructor**
@@ -520,6 +554,10 @@ ___
 
 change log
 ==========
+**0.1.8**
+
+Added AMD loader support.
+___
 **0.1.6**
 
 Updated the words.js dependency to version 0.3.7.
