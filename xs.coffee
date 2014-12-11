@@ -335,8 +335,10 @@ createXs= ( Words ) ->
 # load dependencies
 if define? and ( typeof define is 'function' ) and define.amd
 	define 'xs', [ 'words' ], ( Words ) -> createXs Words
+
 else if window?
 	window.Xs= createXs window.Words
+
 else if module?
 	module.exports= createXs require 'words.js'
 

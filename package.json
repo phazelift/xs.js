@@ -1,7 +1,7 @@
 {
   "name": "xs.js",
-  "version": "0.1.81",
-  "description": "A Javascript deep object manipulation tool/library, with string based access",
+  "version": "0.1.9",
+  "description": "A deep object manipulation tool/library, with string based access",
   "main": "xs.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/phazelift/xs.js",
   "dependencies": {
-    "words.js" : "0.3.82"
+    "words.js" : "0.3.9"
   },
   "devDependencies": {}
 }
