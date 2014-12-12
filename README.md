@@ -584,6 +584,8 @@ change log
 **0.2.0**
 
 Removed words.js dependency, xs.js is now stand-alone ~10kB minified:)
+
+Load words.js or strings.js manually if you're missing them.
 ___
 **0.1.8**
 
