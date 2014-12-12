@@ -180,6 +180,15 @@ class Words
 
 	constructor: -> @set.apply @, arguments
 
+
+	get: ->
+		return @words.join( Words.delimiter ) if arguments.length < 1
+		string= ''
+		for index in arguments
+			index= Tools.positiveIndex( index, @count )
+			string+= @words[ index ]+ Words.delimiter if index isnt false
+		return Strings.trim string
+
 	set: ( args... ) ->
 		@words= []
 		args= _.intoArray.apply @, args
@@ -222,7 +231,9 @@ class Words
 			else if _.isString arg then @xs ( word ) -> true if word isnt arg
 		return @
 
+Object.defineProperty Words::, '$', { get: -> @.get() }
 Object.defineProperty Words::, 'count', { get: -> @words.length }
+
 
 #
 # end of Words
@@ -535,7 +546,6 @@ class Listeners
 
 #
 # end Listeners
-
 
 if define? and ( typeof define is 'function' ) and define.amd
 	define 'xs', [], -> Xs

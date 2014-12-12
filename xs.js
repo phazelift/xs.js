@@ -294,6 +294,22 @@
       this.set.apply(this, arguments);
     }
 
+    Words.prototype.get = function() {
+      var index, string, _i, _len;
+      if (arguments.length < 1) {
+        return this.words.join(Words.delimiter);
+      }
+      string = '';
+      for (_i = 0, _len = arguments.length; _i < _len; _i++) {
+        index = arguments[_i];
+        index = Tools.positiveIndex(index, this.count);
+        if (index !== false) {
+          string += this.words[index] + Words.delimiter;
+        }
+      }
+      return Strings.trim(string);
+    };
+
     Words.prototype.set = function() {
       var arg, args, str, _i, _j, _len, _len1, _ref;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
@@ -395,6 +411,12 @@
     return Words;
 
   })();
+
+  Object.defineProperty(Words.prototype, '$', {
+    get: function() {
+      return this.get();
+    }
+  });
 
   Object.defineProperty(Words.prototype, 'count', {
     get: function() {
