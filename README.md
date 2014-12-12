@@ -3,15 +3,15 @@ xs.js
 
 ***Access your objects!***
 
-**xs.js** A Javascript deep object manipulation tool/library, with string based access. Key features:
+A Javascript deep object manipulation tool/library, with string based access.
+
+Key features:
 
 - use space delimited strings to create and access your objects
-- safely fetching nodes, without risking to crash your app
-- add non-existing nodes with ease
+- safely CRUD nodes with ease and without risking to crash your app
 - remove or change all keys/values at once for nodes with the same name
 - set listeners on nodes (can listen deep as well!)
 - create tree/hierarchical-based text/strings/numbers!
-- and more..
 
 ___
 
@@ -19,8 +19,10 @@ A few quick examples:
 ```javascript
 // with standard JS, if someNode doesn't exist:
 console.log( myObject.someNode.someKey );				// crash!
+
 // or dynamically
 console.log( myObject[ 'someNode' ][ 'someKey' ] );		// crash!
+
 // but, you can safely call with xs.js:
 console.log( myObject.get('someNode someKey') );
 // undefined
@@ -29,10 +31,12 @@ console.log( myObject.get('someNode someKey') );
 Ever tried to create an object with path to some property?
 ```javascript
 var myObject.someNode.someKey= 'crash! way to intuitive..';
+
 // pity, ok we all know how to do this the 'proper' way:
 myObject= {};
 myObject.someNode= {};
 myObject.someNode.someKey= 'lame..';
+
 // of course, some of you will think: dude, this is how you should do it:
 var dumb= {
 	someNode: {
@@ -40,13 +44,34 @@ var dumb= {
 	}
 };
 myObject= dumb;
+
 // now try with xs.js:
 myObject= new Xs('someNode someKey', 'sweet!');
+
 // or go nuts!
 myObject= new Xs('nodes are just words, special !@#$%^ allowed, kidding?', 'omg!');
+
+// which effectively creates this object:
+//	nodes: {
+//		are: {
+//			just: {
+//				'words,': {
+//					special: {
+//						'!@#$%^': {
+//							'allowed,': {
+//								'kidding?': 'omg!'
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
+
 // now you could access this the standard JS way..
 var value= myObject.object.nodes.are.just['words,'].special['!@#$%^']['allowed,']['kidding?'];
-// or with xs.js:
+
+// easier and more save with xs.js:
 value= myObject.get('nodes are just words, special !@#$%^ allowed, kidding?');
 console.log(value);
 // omg!
@@ -57,62 +82,61 @@ Install xs.js, check the API below and wield your new powers for the good!
 <br/>
 <br/>
 ___
-#### Dependencies:
-xs.js extends words.js, which includes strings.js, which includes types.js.
-- types.js is a tiny custom type checker/enforcer. It's API can be found at: https://github.com/phazelift/types.js
-- strings.js is a string manipulation library. It's API can be found at: https://github.com/phazelift/strings.js
-- words.js is a toolbox for manipulating the words in a string. It's API can be found at: https://github.com/phazelift/words.js
 
-<br/>
+##Included:
 
+xs.js includes **types.js** (full 2.2kB) and the smallest possible selection of **tools.js**, **strings.js** and **words.js**.
+
+- types.js is a tiny type-checker/enforcer. It's API can be found at: https://github.com/phazelift/types.js
+- strings.js is an extensive string manipulation library. It's API can be found at: https://github.com/phazelift/strings.js
+- words.js is string manipulation related to words (includes strings.js) It's API can be found at: https://github.com/phazelift/words.js
+
+all available via Xs:
+
+```javascript
+var _		= Xs.Types
+	,Tools	= Xs.Tools
+	,Strings= Xs.Strings
+	,Words	= Xs.Words
+;
+```
+___
 **node.js**
 
-When using xs.js in node.js, you can use `npm install xs.js` (requires npm - https://www.npmjs.org).
+When using xs.js in node.js, you can use `npm install xs.js`, after that:
 ```javascript
-var Xs		= require('xs.js');
-```
-Most methods can be used via xs.js, but several methods are overloaded. So if you want to use the non-overloaded
-methods, you can create variables for them like so:
-```javascript
-var Types	= Xs.Types;
-var Strings	= Xs.Strings;
-var Words	= Xs.Words;
-```
-<br/>
+var Xs		= require('xs.js')
+	,_		= Xs.Types
+;
 
+```
+___
 **AMD**
 
-When using AMD, you can load xs.js like so:
 ```javascript
 require.config({
 	 paths: {
 		xs, [ 'path/to/xs.min(.js') ]
 	}
-	,shim:
-		xs: [ 'path/to/words.min(.js)' ]
 });
 
 require( ['xs'], function( Xs ){
+	// load types.js
+	var _= Xs.Types;
+
+	console.log( _.isObject(Xs) );
+	// true
+
 	console.log( Xs.empty({}) );
 	// true
 });
 ```
-Don't forget to put the dependency words.min.js in the script directory.
-
-<br/>
-
+___
 **Browser**
 
-For in the browser you need to load words.min.js first before loading xs.min.js.
 ```html
-<script src="words.min.js"></script>
-<script src="xs.min.js"></script>
+<script src="path/to/xs.min.js"></script>
 ```
-After that you can access the dependencies via the following global variables:
-- Types
-- Strings
-- Words
-
 ___
 
 # API
@@ -171,9 +195,11 @@ reason a non-String was to be found (except for Number which will be converted) 
 ```javascript
 console.log( xs.gets('brush colors red') );
 // #f00
+
 // try fetching a non-existing key
 console.log( xs.gets('brush colors pink') );
 // ''
+
 // where .get would return undefined:
 console.log( xs.get('brush colors pink') );
 // undefined
@@ -260,6 +286,7 @@ With add you cannot set existing nodes, path has to be new and unique. If the no
 the argument is invalid, the call will be ignored.
 ```javascript
 xs.add( 'brush', {style: 'soft'} );
+
 // or easier:
 xs.add( 'brush style', 'soft' );
 console.log( xs.get() );
@@ -554,6 +581,10 @@ ___
 
 change log
 ==========
+**0.2.0**
+
+Removed words.js dependency, xs.js is now stand-alone ~10kB minified:)
+___
 **0.1.8**
 
 Added AMD loader support.
@@ -580,11 +611,9 @@ ___
 todo:
 =====
 
-- remove strings.js and words.js dependencies
 - source annotations
 - some more testing
 - make listeners more specific for any combination of: add, create, read, update, delete
-- readme
 
 ___
 **Additional**
